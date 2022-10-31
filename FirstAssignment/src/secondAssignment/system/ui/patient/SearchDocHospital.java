@@ -4,6 +4,14 @@
  */
 package secondAssignment.system.ui.patient;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.table.DefaultTableModel;
+import secondAssignment.system.person.Doctor;
+import secondAssignment.system.person.DoctorDirectory;
+
 /**
  *
  * @author devshahofficial
@@ -13,8 +21,34 @@ public class SearchDocHospital extends javax.swing.JFrame {
     /**
      * Creates new form SearchDocHospital
      */
+    String data;
+    DoctorDirectory dlist;
     public SearchDocHospital() {
         initComponents();
+        
+        try {
+            File myObj = new File("C:\\devshahofficial\\Assignment\\INFO2\\INFO\\FirstAssignment\\src\\txt\\doctor.txt");
+            Scanner myReader = new Scanner(myObj);
+             while (myReader.hasNextLine()) {
+                data = myReader.nextLine();
+                String[] community = data.split("=");
+                communitydoctorsearchcombo.addItem(community[0]); 
+                System.out.println("'==> '"+data);
+              }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        //String[] stringofcommunity = data.split("\\r?\\n");
+       // String cities = stringofcities[1];
+        //String[] cityarray = cities.split(",");
+        //for (String a : stringofcommunity) {
+        //    System.out.println("--> "+a);
+        //    String[] community = a.split("=");
+        //    communitydoctorsearchcombo.addItem(community[0]); 
+        //}
     }
 
     /**
@@ -27,6 +61,11 @@ public class SearchDocHospital extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        communitydoctorsearchcombo = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDisplay = new javax.swing.JTable();
+        btnSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(280, 150));
@@ -34,25 +73,111 @@ public class SearchDocHospital extends javax.swing.JFrame {
 
         jLabel1.setText("Search Hospital and Doc");
 
+        jLabel2.setText("Community");
+
+        tblDisplay.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Doctor Name", "Address", "Availablity"
+            }
+        ));
+        jScrollPane1.setViewportView(tblDisplay);
+
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(600, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(communitydoctorsearchcombo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46)
+                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(246, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel1)
-                .addContainerGap(461, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(communitydoctorsearchcombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
+                .addGap(36, 36, 36)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(260, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tblDisplay.getModel();
+        String[] dData;
+        Object[] row = new Object[3];
+        Integer ctr = 0;
+        String name = communitydoctorsearchcombo.getSelectedItem().toString();
+       
+        //System.out.println("In Search Name- "+ name);
+    
+      try {
+            File myObj = new File("C:\\devshahofficial\\Assignment\\INFO2\\INFO\\FirstAssignment\\src\\txt\\doctor.txt");
+            Scanner myReader = new Scanner(myObj);
+             while (myReader.hasNextLine()) {
+                data = myReader.nextLine();
+                String[] community = data.split("=");
+                //communitydoctorsearchcombo.addItem(community[0]); 
+                //System.out.println("'==> '"+data);
+                 //System.out.println("Community Name -" + community[0] + "-");
+                 //System.out.println("Name -" + name + "-");
+                if (name.equals(community[0]) ){
+                    System.out.println("Matched");
+                    //dData = community;
+                    model.setRowCount(0);
+                    for (String a : community){
+                        String[] ddata = community[1].split("|");
+                        row[0] = ddata[0];
+                        row[1] = ddata[1];
+                        model.addRow(row);
+                    }
+                    break;
+                }
+                
+              }
+             
+             
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+       
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -90,6 +215,11 @@ public class SearchDocHospital extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox<String> communitydoctorsearchcombo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblDisplay;
     // End of variables declaration//GEN-END:variables
 }

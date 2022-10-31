@@ -1,0 +1,3 @@
+communityName=2
+houseId=sw
+person=sw

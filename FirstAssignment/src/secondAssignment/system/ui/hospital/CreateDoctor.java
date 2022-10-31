@@ -4,6 +4,8 @@
  */
 package secondAssignment.system.ui.hospital;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
@@ -57,7 +59,7 @@ public class CreateDoctor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        txtAddress = new javax.swing.JTextField();
+        txtAvailablity = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -74,7 +76,7 @@ public class CreateDoctor extends javax.swing.JFrame {
 
         jLabel12.setText("Community");
 
-        jLabel11.setText("Address");
+        jLabel11.setText("Availablity");
 
         jLabel10.setText("City");
 
@@ -102,9 +104,9 @@ public class CreateDoctor extends javax.swing.JFrame {
 
         jLabel13.setText("Email ID");
 
-        txtAddress.addActionListener(new java.awt.event.ActionListener() {
+        txtAvailablity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAddressActionPerformed(evt);
+                txtAvailablityActionPerformed(evt);
             }
         });
 
@@ -140,7 +142,7 @@ public class CreateDoctor extends javax.swing.JFrame {
                                     .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtCommunity, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtEmailID, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtAvailablity, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(120, 120, 120)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -178,7 +180,7 @@ public class CreateDoctor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAvailablity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
@@ -204,10 +206,10 @@ public class CreateDoctor extends javax.swing.JFrame {
         Integer id = Integer.parseInt(txtPatientID.getText());
         Integer age = Integer.parseInt(txtage.getText());
         String email = txtEmailID.getText();
-        String residence = txtAddress.getText();
+        String availablity = txtAvailablity.getText();
         String community = txtCommunity.getText();
         Community c1 = city.getCommunity(community);
-        House house = new House(residence);
+        House house = new House(availablity);
         if (c1.getCommunityName() != null) {
             c1.addHouse(house);
             System.out.println("Old community found:" + c1.getCommunityName());
@@ -225,7 +227,17 @@ public class CreateDoctor extends javax.swing.JFrame {
         
        
         plist.addDoctor(dr);
-
+try {  
+      FileWriter myWriter = new FileWriter("C:\\devshahofficial\\Assignment\\INFO2\\INFO\\FirstAssignment\\src\\txt\\doctor.txt");
+     
+      myWriter.write(community + "=" + dr.getName() + "|" + availablity);
+     // myWriter.write("communityName="+communityName.toString() + "\n");
+      myWriter.close();
+      System.out.println("Successfully wrote to the file.");
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
         JOptionPane.showMessageDialog(this, "New Doctor added.");
         setVisible(false);
         new CreateDoctor(plist, city).setVisible(true);
@@ -236,9 +248,9 @@ public class CreateDoctor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailIDActionPerformed
 
-    private void txtAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAddressActionPerformed
+    private void txtAvailablityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAvailablityActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtAddressActionPerformed
+    }//GEN-LAST:event_txtAvailablityActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,7 +299,7 @@ public class CreateDoctor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField txtAddress;
+    private javax.swing.JTextField txtAvailablity;
     private javax.swing.JTextField txtCity;
     private javax.swing.JTextField txtCommunity;
     private javax.swing.JTextField txtEmailID;

@@ -148,6 +148,7 @@ public class Patient extends javax.swing.JFrame {
 
     private void btnAddHistory1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddHistory1ActionPerformed
         // TODO add your handling code here:
+        new SearchDocHospital().setVisible(true);
     }//GEN-LAST:event_btnAddHistory1ActionPerformed
 
     /**
